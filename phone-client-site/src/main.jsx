@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 // import Home from './assets/components/Home/Home';
 import Main from './assets/components/Main/Main'
+import Phones from './assets/components/Phones/Phones'
 // import App from './App.jsx'
 
 import './index.css'
@@ -17,7 +18,8 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/Phones",
-        element: <phones />,
+        element: <Phones></Phones>,
+        loader: () => fetch('http://localhost:5000/phones')
       },
     ],
   },
