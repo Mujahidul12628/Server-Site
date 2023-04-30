@@ -10,7 +10,7 @@ const Phones = () => {
             <h1>All phones here {phones.length}</h1>
             {
                 phones.map(phone => <li key={phone.div
-                }> {phone.name}</li>
+                }> <Link to={`/phone/${phone.div}`}> {phone.name}</Link></li>
                 )
             }
         </div>
