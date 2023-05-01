@@ -22,7 +22,7 @@ const Login = () => {
     }
     const handleGithubSignIn = () => {
         console.log("Google added")
-        signInWithPopup(auth, googleProvider)
+        signInWithPopup(auth, githubProvider)
             .then(result => {
                 const loggedInUser = result.user;
                 console.log(loggedInUser);
