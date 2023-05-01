@@ -1,8 +1,9 @@
-import React from 'react';
-import { GoogleAuthProvider, getAuth, signInWithPopup } from 'firebase/auth';
+import React, { useState } from 'react';
+import { GoogleAuthProvider, getAuth, signInWithPopup, signOut } from 'firebase/auth';
 import app from '../../firebase/firebase.init';
 
 const Login = () => {
+    const [user, setUser] = useState(null)
     const auth = getAuth(app)
     const provider = new GoogleAuthProvider();
 
@@ -10,8 +11,20 @@ const Login = () => {
         console.log("Google added")
         signInWithPopup(auth, provider)
             .then(result => {
-                const user = result.user;
-                console.log(user);
+                const loggedInUser = result.user;
+                console.log(loggedInUser);
+                setUser(loggedInUser)
+            })
+            .catch(error => {
+                console.log('error', error.message)
+            })
+    }
+    const handleGoogleSignOut = () => {
+        signOut(auth)
+            .then(result => {
+
+                console.log(result);
+                setUser(null)
             })
             .catch(error => {
                 console.log('error', error.message)
@@ -20,7 +33,19 @@ const Login = () => {
 
     return (
         <div>
-            <button onClick={handleGoogleSignIn}>Google Login</button>
+            {
+                user ?
+                    <button onClick={handleGoogleSignOut}>Google Logout</button> :
+                    <button onClick={handleGoogleSignIn}>Google Login</button>
+            }
+
+            {
+                user && <div>
+                    <img src={user.photoURL} alt="" />
+                    <h4>User: {user.displayName} </h4>
+                    <p>Email: {user.email} </p>
+                </div>
+            }
         </div>
     );
 };
