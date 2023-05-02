@@ -8,6 +8,8 @@ const Register = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
 
     const handleEmailChange = (event) => {
         console.log(event.target.value)
@@ -27,13 +29,20 @@ const Register = () => {
 
         console.log(email, password)
 
+        //Validate
+
         createUserWithEmailAndPassword(auth, email, password)
             .then((result) => {
                 const loggedUser = result.user;
                 console.log(loggedUser)
+                setError('');
+                event.target.reset();
+                setSuccess("User Created Successfully")
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error.message)
+                setError(error.message);
+                setSuccess("")
             });
 
     }
@@ -45,11 +54,14 @@ const Register = () => {
 
             <form className='' onSubmit={handleSubmit} action="">
 
-                <input onChange={handleEmailChange} className='w-50 mb-4 rounded' type="email" name='email' id='email' placeholder='Email' />
+                <input onChange={handleEmailChange} className='w-50 mb-4 rounded' type="email" name='email' id='email' placeholder='Email' required />
 
-                <input onBlur={handlePasswordBlur} className='w-50 mb-4 rounded' type="password" name='password' id='password' placeholder='Password' />
+                <input onBlur={handlePasswordBlur} className='w-50 mb-4 rounded' type="password" name='password' id='password' placeholder='Password' required />
 
                 <input className='btn btn-primary' type="submit" value="Register" />
+
+                <p className='text-danger'>{error}</p>
+                <p className='text-success'>{success}</p>
             </form>
         </div>
     );
