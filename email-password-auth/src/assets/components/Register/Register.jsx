@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import app from '../../firebase/firebase.config';
+import { Link } from 'react-router-dom'
 
 const auth = getAuth(app);
 const Register = () => {
-
-
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -60,6 +59,7 @@ const Register = () => {
 
                 <input className='btn btn-primary' type="submit" value="Register" />
 
+                <p><small>Already have an account? Please <Link to="/login">Login</Link></small></p>
                 <p className='text-danger'>{error}</p>
                 <p className='text-success'>{success}</p>
             </form>
